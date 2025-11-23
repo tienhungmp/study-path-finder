@@ -131,7 +131,10 @@ const Index = () => {
         {/* CTA Links */}
         <div className="mt-8 text-center space-y-4">
           <p className="text-muted-foreground">
-            Đã có gợi ý trước đó?{" "}
+            <Button variant="link" onClick={() => navigate("/login")} className="p-0 h-auto font-medium">
+              Đăng nhập / Đăng ký
+            </Button>
+            {" • "}
             <Button variant="link" onClick={() => navigate("/history")} className="p-0 h-auto">
               Xem lịch sử
             </Button>
