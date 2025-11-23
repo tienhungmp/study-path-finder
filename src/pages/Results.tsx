@@ -1,0 +1,185 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, Calendar, ChevronRight, Home, RotateCcw, User } from "lucide-react";
+
+const Results = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const formData = location.state;
+
+  // Mock data for books
+  const books = [
+    {
+      id: 1,
+      title: "Python Crash Course",
+      author: "Eric Matthes",
+      description: "Giáo trình học Python nhanh và hiệu quả, từ cơ bản đến nâng cao với các dự án thực tế",
+      image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=300&h=400&fit=crop",
+      level: "Beginner",
+    },
+    {
+      id: 2,
+      title: "Fluent Python",
+      author: "Luciano Ramalho",
+      description: "Học cách viết code Python hiệu quả và pythonic, phù hợp cho người đã có kiến thức cơ bản",
+      image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=300&h=400&fit=crop",
+      level: "Intermediate",
+    },
+    {
+      id: 3,
+      title: "Python for Data Analysis",
+      author: "Wes McKinney",
+      description: "Phân tích dữ liệu với Python, pandas, NumPy và IPython - công cụ thiết yếu cho Data Scientist",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=400&fit=crop",
+      level: "Advanced",
+    },
+  ];
+
+  // Mock timeline data
+  const timeline = [
+    { phase: "Giai đoạn 1", duration: "Tuần 1-4", title: "Nền tảng cơ bản", description: "Học cú pháp, biến, vòng lặp và hàm" },
+    { phase: "Giai đoạn 2", duration: "Tuần 5-8", title: "Lập trình hướng đối tượng", description: "Classes, objects, inheritance" },
+    { phase: "Giai đoạn 3", duration: "Tuần 9-12", title: "Làm việc với dữ liệu", description: "File handling, databases, APIs" },
+    { phase: "Giai đoạn 4", duration: "Tuần 13-16", title: "Dự án thực tế", description: "Xây dựng ứng dụng hoàn chỉnh" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b border-border sticky top-0 z-10 shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-primary">
+              Gợi Ý Của Bạn
+            </h1>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => navigate("/history")}>
+                <Calendar className="w-4 h-4" />
+                Lịch sử
+              </Button>
+              <Button variant="ghost" onClick={() => navigate("/")}>
+                <Home className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* User Input Summary */}
+        <Card className="mb-8 shadow-md border-primary/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="w-5 h-5 text-primary" />
+              Thông tin của bạn
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Môn học</p>
+                <Badge variant="outline" className="text-sm">{formData?.subject || "Python"}</Badge>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Trình độ</p>
+                <Badge variant="outline" className="text-sm">{formData?.level || "Beginner"}</Badge>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Mục tiêu</p>
+                <Badge variant="outline" className="text-sm">{formData?.goal || "Tìm việc làm"}</Badge>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Lĩnh vực</p>
+                <Badge variant="outline" className="text-sm">{formData?.field || "Technology"}</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Books Section */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold flex items-center gap-3">
+              <BookOpen className="w-8 h-8 text-primary" />
+              Sách Gợi Ý
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {books.map((book) => (
+              <Card key={book.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 border-border">
+                <div className="h-64 overflow-hidden">
+                  <img src={book.image} alt={book.title} className="w-full h-full object-cover" />
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between mb-2">
+                    <Badge className="bg-gradient-primary">{book.level}</Badge>
+                  </div>
+                  <CardTitle className="text-xl">{book.title}</CardTitle>
+                  <CardDescription className="flex items-center gap-1">
+                    <User className="w-3 h-3" />
+                    {book.author}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground line-clamp-3">{book.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Timeline Section */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+            <Calendar className="w-8 h-8 text-secondary" />
+            Lộ Trình Học Tập
+          </h2>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-primary rounded-full" />
+            
+            <div className="space-y-8">
+              {timeline.map((item, index) => (
+                <div key={index} className="relative pl-20">
+                  {/* Timeline dot */}
+                  <div className="absolute left-5 w-7 h-7 bg-primary rounded-full border-4 border-background shadow-md flex items-center justify-center">
+                    <span className="text-xs text-primary-foreground font-bold">{index + 1}</span>
+                  </div>
+                  
+                  <Card className="shadow-md hover:shadow-lg transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="outline">{item.phase}</Badge>
+                        <span className="text-sm text-muted-foreground">{item.duration}</span>
+                      </div>
+                      <CardTitle className="text-xl">{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button variant="gradient" size="lg" onClick={() => navigate("/")}>
+            <RotateCcw className="w-5 h-5" />
+            Gợi Ý Lại
+          </Button>
+          <Button variant="outline" size="lg" onClick={() => navigate("/history")}>
+            Xem Lịch Sử
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Results;
